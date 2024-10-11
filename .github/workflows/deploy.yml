@@ -1,0 +1,28 @@
+name: Deploy CloudFormation Stack
+
+on:
+  push:
+    branches:
+      - main  # Change this to your preferred branch
+  pull_request:
+    branches:
+      - main  # This will trigger on PRs targeting the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Deploy CloudFormation Stack
+        run: |
+          aws cloudformation create-stack --stack-name combined-stack --template-body file:///Users/dteimuno/Documents/GitHub/luit-cda5/cloudformation_dynamodb_iam_ec2_cf.yaml
