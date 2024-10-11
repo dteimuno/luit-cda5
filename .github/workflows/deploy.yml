@@ -25,6 +25,5 @@ jobs:
 
       - name: Deploy CloudFormation Stack
         run: |
-          aws cloudformation deploy \
-            --template-file cloudformation_dynamodb_iam_ec2.yaml \  # Change this to your template file path
-            --stack-name combined-stack 
+          aws cloudformation create-stack --combined-stack  \
+            --template-body file://cloudformation_dynamodb_iam_ec2.yaml 
